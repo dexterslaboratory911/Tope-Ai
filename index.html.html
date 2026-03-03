@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tope Ai — The Operating System for Small Business</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0a0a08;
+  --surface: #111110;
+  --border: rgba(255,255,255,0.07);
+  --gold: #c9a96e;
+  --gold-dim: rgba(201,169,110,0.15);
+  --cream: #f0ead8;
+  --muted: rgba(240,234,216,0.5);
+  --red: #d4614a;
+  --green: #5a9e7a;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--cream);
+  font-family: 'Syne', sans-serif;
+  overflow-x: hidden;
+}
+
+/* GRAIN */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 9000;
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 24px 60px;
+  z-index: 500;
+  background: linear-gradient(to bottom, rgba(10,10,8,0.97) 60%, transparent);
+  backdrop-filter: blur(2px);
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-weight: 300;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--cream);
+}
+.nav-logo span { color: var(--gold); }
+.nav-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.22em;
+  color: var(--muted); text-transform: uppercase;
+}
+.nav-cta {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold); text-decoration: none;
+  border: 1px solid rgba(201,169,110,0.4);
+  padding: 10px 26px;
+  transition: background 0.3s, border-color 0.3s;
+}
+.nav-cta:hover { background: var(--gold-dim); border-color: var(--gold); }
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0 60px 80px;
+  position: relative; overflow: hidden;
+}
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(201,169,110,0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,169,110,0.045) 1px, transparent 1px);
+  background-size: 80px 80px;
+  animation: gridDrift 28s linear infinite;
+}
+@keyframes gridDrift {
+  0%   { transform: translate(0,0); }
+  100% { transform: translate(80px,80px); }
+}
+.hero-orb {
+  position: absolute; top: 8%; right: -8%;
+  width: 650px; height: 650px;
+  background: radial-gradient(circle, rgba(201,169,110,0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: breathe 9s ease-in-out infinite;
+}
+.hero-orb2 {
+  position: absolute; bottom: -5%; left: -5%;
+  width: 420px; height: 420px;
+  background: radial-gradient(circle, rgba(90,158,122,0.06) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: breathe 13s ease-in-out infinite reverse;
+}
+@keyframes breathe {
+  0%,100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(1.07); opacity: 0.7; }
+}
+
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: 0.28em;
+  color: var(--gold); text-transform: uppercase;
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 32px;
+  animation: fadeUp 0.8s 0.2s both;
+}
+.hero-eyebrow::before { content:''; width:40px; height:1px; background:var(--gold); }
+
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(62px,8.5vw,118px);
+  font-weight: 300; line-height: 0.93;
+  letter-spacing: -0.02em; color: var(--cream);
+  max-width: 880px;
+  animation: fadeUp 1s 0.35s both;
+}
+.hero-title em { font-style: italic; color: var(--gold); }
+
+.hero-bottom {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  margin-top: 64px;
+  animation: fadeUp 1s 0.6s both;
+}
+.hero-desc {
+  max-width: 400px;
+  font-family: 'DM Mono', monospace;
+  font-size: 13px; line-height: 1.9;
+  color: var(--muted); letter-spacing: 0.03em;
+}
+.hero-stats { display: flex; gap: 52px; }
+.hero-stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px; font-weight: 300; color: var(--cream); line-height: 1;
+}
+.hero-stat-num sup { font-size: 24px; color: var(--gold); vertical-align: super; }
+.hero-stat-label {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 0.2em; color: var(--muted);
+  text-transform: uppercase; margin-top: 6px;
+}
+
+.scroll-line-wrap {
+  position: absolute; bottom: 80px; right: 60px;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  animation: fadeIn 1s 1.4s both;
+}
+.scroll-line {
+  width: 1px; height: 56px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: scrollPulse 2.2s ease-in-out infinite;
+}
+.scroll-label {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.28em; color: var(--muted);
+  writing-mode: vertical-rl; text-transform: uppercase;
+}
+@keyframes scrollPulse {
+  0%,100% { opacity:1; } 50% { opacity:0.3; }
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(22px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity:0; } to { opacity:1; }
+}
+
+/* ─── SECTION LABEL ─── */
+.section-label {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 0.32em; color: var(--gold);
+  text-transform: uppercase; margin-bottom: 72px;
+  display: flex; align-items: center; gap: 16px;
+}
+.section-label::before { content:''; width:32px; height:1px; background:var(--gold); }
+
+.divider { width: calc(100% - 120px); margin: 0 60px; height:1px; background:var(--border); }
+
+/* ─── TICKER ─── */
+.ticker-section { padding: 100px 60px; }
+.signal-ticker {
+  overflow: hidden;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 22px 0; margin-bottom: 90px;
+}
+.ticker-track {
+  display: flex; white-space: nowrap;
+  animation: ticker 22s linear infinite;
+}
+@keyframes ticker { 0% { transform:translateX(0); } 100% { transform:translateX(-50%); } }
+.ticker-item {
+  display: inline-flex; align-items: center; gap: 14px;
+  padding: 0 44px;
+  border-right: 1px solid var(--border);
+}
+.ticker-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+.ticker-dot.g { background:var(--green); box-shadow:0 0 7px var(--green); }
+.ticker-dot.r { background:var(--red);   box-shadow:0 0 7px var(--red); }
+.ticker-dot.y { background:var(--gold);  box-shadow:0 0 7px var(--gold); }
+.ticker-text { font-family:'DM Mono',monospace; font-size:12px; color:var(--cream); letter-spacing:0.05em; }
+.ticker-badge {
+  font-family:'DM Mono',monospace; font-size:10px;
+  padding:3px 10px; border-radius:2px; letter-spacing:0.1em;
+}
+.badge-up   { background:rgba(90,158,122,0.15);  color:var(--green); }
+.badge-down { background:rgba(212,97,74,0.15);   color:var(--red);   }
+.badge-warn { background:rgba(201,169,110,0.15); color:var(--gold);  }
+
+/* ─── SIGNAL CARDS ─── */
+.signals-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 2px; background: var(--border);
+}
+.signal-card {
+  background: var(--surface); padding: 52px 44px;
+  position: relative; overflow: hidden;
+  transition: background 0.4s;
+}
+.signal-card:hover { background: #16160e; }
+.signal-card::after {
+  content:''; position:absolute; bottom:0; left:0; right:0;
+  height:2px; background:transparent; transition:background 0.4s;
+}
+.signal-card:hover::after { background:var(--gold); }
+.signal-num {
+  font-family:'Cormorant Garamond',serif; font-size:76px; font-weight:300;
+  color:rgba(240,234,216,0.05); line-height:1;
+  position:absolute; top:20px; right:28px;
+}
+.signal-icon { font-size:26px; margin-bottom:22px; }
+.signal-title {
+  font-family:'Cormorant Garamond',serif; font-size:34px; font-weight:300;
+  color:var(--cream); line-height:1.15; margin-bottom:18px;
+}
+.signal-title em { font-style:italic; color:var(--gold); }
+.signal-body {
+  font-family:'DM Mono',monospace; font-size:12px;
+  line-height:1.9; color:var(--muted);
+}
+
+/* ─── PROBLEM ─── */
+.problem {
+  padding: 130px 60px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 100px; align-items: center;
+}
+.problem-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(40px,5vw,68px); font-weight:300;
+  line-height:1.06; color:var(--cream); margin-bottom:36px;
+}
+.problem-title em { font-style:italic; color:var(--gold); }
+.problem-body {
+  font-family:'DM Mono',monospace; font-size:13px;
+  line-height:2; color:var(--muted); margin-bottom:44px;
+}
+.problem-quote {
+  border-left:2px solid var(--gold); padding-left:26px;
+  font-family:'Cormorant Garamond',serif; font-size:21px;
+  font-weight:300; font-style:italic; color:var(--cream); line-height:1.55;
+}
+.problem-quote cite {
+  display:block; font-family:'DM Mono',monospace; font-size:10px;
+  font-style:normal; letter-spacing:0.2em; color:var(--gold);
+  text-transform:uppercase; margin-top:14px;
+}
+
+/* Fragment diagram */
+.fragment-diagram { position:relative; height:480px; }
+.frag-node {
+  position:absolute;
+  background:var(--surface); border:1px solid var(--border);
+  padding:14px 18px;
+  font-family:'DM Mono',monospace; font-size:11px;
+  letter-spacing:0.1em; color:var(--muted); text-transform:uppercase;
+  transition:border-color 0.4s, color 0.4s;
+}
+.frag-node:hover { border-color:var(--gold); color:var(--cream); }
+.fn1 { top:8%;  left:52%; animation:nf1 7s ease-in-out infinite; }
+.fn2 { top:28%; left:4%;  animation:nf2 5.5s ease-in-out infinite; }
+.fn3 { top:54%; left:56%; animation:nf3 8s ease-in-out infinite; }
+.fn4 { top:70%; left:12%; animation:nf4 6.5s ease-in-out infinite; }
+.fn5 { top:42%; left:28%; animation:nf5 9s ease-in-out infinite; }
+@keyframes nf1 { 0%,100%{transform:translate(0,0);} 50%{transform:translate(-5px,8px);} }
+@keyframes nf2 { 0%,100%{transform:translate(0,0);} 50%{transform:translate(6px,-4px);} }
+@keyframes nf3 { 0%,100%{transform:translate(0,0);} 50%{transform:translate(-4px,6px);} }
+@keyframes nf4 { 0%,100%{transform:translate(0,0);} 50%{transform:translate(5px,-5px);} }
+@keyframes nf5 { 0%,100%{transform:translate(0,0);} 50%{transform:translate(-6px,4px);} }
+.frag-svg { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+.frag-center {
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:96px; height:96px; border-radius:50%;
+  border:1px solid rgba(201,169,110,0.35);
+  display:flex; align-items:center; justify-content:center; text-align:center;
+  font-family:'Cormorant Garamond',serif; font-size:13px;
+  color:var(--gold); letter-spacing:0.05em;
+  animation: pulsering 3s ease-in-out infinite;
+}
+@keyframes pulsering {
+  0%,100% { box-shadow:0 0 0 0 rgba(201,169,110,0.2); }
+  50%      { box-shadow:0 0 0 18px rgba(201,169,110,0); }
+}
+
+/* ─── AI CHAT SECTION ─── */
+.ai-chat-section {
+  padding: 130px 60px; position:relative; overflow:hidden;
+}
+.ai-chat-section::before {
+  content:''; position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  width:700px; height:700px;
+  background:radial-gradient(circle,rgba(201,169,110,0.05) 0%,transparent 70%);
+  border-radius:50%; pointer-events:none;
+}
+.ai-chat-inner {
+  max-width:1100px; margin:0 auto;
+  display:grid; grid-template-columns:1fr 1.45fr;
+  gap:80px; align-items:center;
+}
+.ai-chat-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(38px,4vw,58px); font-weight:300;
+  color:var(--cream); line-height:1.08; margin-bottom:26px;
+}
+.ai-chat-title em { font-style:italic; color:var(--gold); }
+.ai-chat-desc {
+  font-family:'DM Mono',monospace; font-size:12px;
+  line-height:1.9; color:var(--muted); margin-bottom:36px;
+}
+.ai-pills { display:flex; flex-wrap:wrap; gap:10px; }
+.ai-pill {
+  font-family:'DM Mono',monospace; font-size:10px;
+  letter-spacing:0.12em; text-transform:uppercase;
+  padding:7px 14px; border:1px solid var(--border); color:var(--muted);
+}
+.ai-pill.on { border-color:var(--gold); color:var(--gold); background:var(--gold-dim); }
+
+/* Chat window */
+.chat-window {
+  background:#0d0d0b;
+  border:1px solid rgba(255,255,255,0.1); border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 40px 100px rgba(0,0,0,0.65), 0 0 0 1px rgba(201,169,110,0.07);
+}
+.chat-bar {
+  background:#151513; border-bottom:1px solid rgba(255,255,255,0.07);
+  padding:13px 18px;
+  display:flex; align-items:center; gap:12px;
+}
+.c-dots { display:flex; gap:6px; }
+.c-dot { width:10px; height:10px; border-radius:50%; }
+.c-dot.r{background:#ff5f57;} .c-dot.y{background:#febc2e;} .c-dot.g{background:#28c840;}
+.c-title {
+  flex:1; text-align:center;
+  font-family:'DM Mono',monospace; font-size:11px;
+  letter-spacing:0.1em; color:var(--muted);
+}
+.c-live {
+  display:flex; align-items:center; gap:6px;
+  font-family:'DM Mono',monospace; font-size:10px; color:var(--green);
+}
+.c-live-dot {
+  width:6px; height:6px; background:var(--green); border-radius:50%;
+  animation:liveBlink 2s ease-in-out infinite;
+}
+@keyframes liveBlink { 0%,100%{opacity:1;} 50%{opacity:0.25;} }
+
+.chat-messages {
+  padding:20px 18px; min-height:400px;
+  display:flex; flex-direction:column; gap:18px;
+}
+
+/* Message rows */
+.cmsg {
+  display:flex; gap:10px; align-items:flex-start;
+}
+.cmsg.user { flex-direction:row-reverse; }
+
+.cavatar {
+  width:28px; height:28px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Syne',sans-serif; font-size:10px; font-weight:700;
+}
+.cavatar.ai   { background:linear-gradient(135deg,var(--gold),#9a7030); color:#0a0a08; }
+.cavatar.user { background:#1f1f1c; border:1px solid var(--border); font-size:13px; }
+
+.cbubble { flex:1; max-width:90%; }
+.csender {
+  font-family:'DM Mono',monospace; font-size:10px;
+  letter-spacing:0.12em; text-transform:uppercase; margin-bottom:7px;
+}
+.csender.ai   { color:var(--gold); }
+.csender.user { color:var(--muted); text-align:right; }
+
+.ccard {
+  background:#181816; border:1px solid rgba(255,255,255,0.06);
+  border-radius:4px 12px 12px 12px;
+  padding:14px 16px;
+  font-family:'DM Mono',monospace; font-size:12px;
+  line-height:1.75; color:var(--cream);
+}
+.cmsg.user .ccard {
+  background:#1c1c18; border-radius:12px 4px 12px 12px;
+  color:var(--muted); text-align:right;
+}
+
+/* Alert rows inside bubble */
+.calert {
+  display:flex; gap:12px; align-items:flex-start;
+  padding-bottom:12px; margin-bottom:12px;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+}
+.calert:last-child { padding-bottom:0; margin-bottom:0; border-bottom:none; }
+.calert-icon { font-size:16px; flex-shrink:0; padding-top:1px; }
+.calert-t { color:var(--cream); font-weight:500; margin-bottom:4px; font-size:12px; }
+.calert-b { color:var(--muted); font-size:11px; line-height:1.7; }
+.ctag {
+  display:inline-block; margin-top:6px; padding:2px 9px;
+  border-radius:2px; font-size:9px; letter-spacing:0.1em; text-transform:uppercase;
+}
+.ctag.r { background:rgba(212,97,74,0.15);   color:var(--red);   }
+.ctag.y { background:rgba(201,169,110,0.15); color:var(--gold);  }
+.ctag.g { background:rgba(90,158,122,0.15);  color:var(--green); }
+
+/* Typing dots */
+.ctyping {
+  display:flex; align-items:center; gap:10px;
+  font-family:'DM Mono',monospace; font-size:10px; color:var(--muted);
+}
+.tdots { display:flex; gap:4px; align-items:center; }
+.tdot {
+  width:6px; height:6px; background:var(--gold); border-radius:50%;
+  animation:tdBounce 1.2s ease-in-out infinite;
+}
+.tdot:nth-child(2){animation-delay:0.2s;} .tdot:nth-child(3){animation-delay:0.4s;}
+@keyframes tdBounce {
+  0%,60%,100%{transform:translateY(0);opacity:0.4;}
+  30%{transform:translateY(-5px);opacity:1;}
+}
+
+/* Animation for chat messages */
+.cmsg { opacity: 0; transform: translateY(8px); }
+.cmsg.show { animation: msgPop 0.45s ease forwards; }
+@keyframes msgPop {
+  from { opacity:0; transform:translateY(8px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.ctyping { opacity: 0; }
+.ctyping.show { animation: msgPop 0.45s ease forwards; }
+
+/* Chat input */
+.chat-input-bar {
+  border-top:1px solid rgba(255,255,255,0.07);
+  padding:12px 18px;
+  display:flex; align-items:center; gap:10px;
+}
+.chat-fake-input {
+  flex:1; background:#161614;
+  border:1px solid rgba(255,255,255,0.07); border-radius:8px;
+  padding:9px 14px;
+  font-family:'DM Mono',monospace; font-size:12px;
+  color:rgba(240,234,216,0.28);
+  display:flex; align-items:center; gap:6px; min-height:38px;
+}
+.fake-cursor {
+  display:inline-block; width:2px; height:13px;
+  background:var(--gold); vertical-align:middle;
+  animation:curBlink 1s step-end infinite;
+}
+@keyframes curBlink { 0%,100%{opacity:1;} 50%{opacity:0;} }
+.chat-send {
+  width:36px; height:36px; background:var(--gold); border-radius:8px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:15px; color:#0a0a08; flex-shrink:0; font-weight:700;
+}
+
+/* ─── HOW IT WORKS ─── */
+.how { padding:130px 60px; }
+.how-head {
+  display:flex; align-items:flex-end; justify-content:space-between;
+  margin-bottom:72px;
+}
+.how-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(40px,5vw,68px); font-weight:300;
+  color:var(--cream); line-height:1.06;
+}
+.how-title em { font-style:italic; color:var(--gold); }
+.how-note {
+  font-family:'DM Mono',monospace; font-size:12px;
+  line-height:1.8; color:var(--muted); max-width:290px; text-align:right;
+}
+.how-steps {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:2px; background:var(--border);
+}
+.how-step {
+  background:var(--surface); padding:44px 32px;
+  position:relative; transition:background 0.4s;
+}
+.how-step:hover { background:#141412; }
+.step-n {
+  font-family:'DM Mono',monospace; font-size:10px;
+  letter-spacing:0.22em; color:var(--gold); margin-bottom:28px;
+}
+.step-t {
+  font-family:'Cormorant Garamond',serif; font-size:26px;
+  font-weight:400; color:var(--cream); margin-bottom:14px; line-height:1.2;
+}
+.step-b {
+  font-family:'DM Mono',monospace; font-size:11px;
+  line-height:1.9; color:var(--muted);
+}
+.step-arr {
+  position:absolute; top:50%; right:-11px; transform:translateY(-50%);
+  z-index:2; width:22px; height:1px; background:var(--gold);
+}
+.step-arr::after {
+  content:''; position:absolute; right:0; top:-3px;
+  border-top:4px solid transparent; border-bottom:4px solid transparent;
+  border-left:6px solid var(--gold);
+}
+.how-step:last-child .step-arr { display:none; }
+
+/* ─── VALIDATION ─── */
+.validation {
+  padding:120px 60px;
+  display:grid; grid-template-columns:1fr 1fr; gap:80px;
+}
+.val-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(36px,4vw,56px); font-weight:300;
+  color:var(--cream); line-height:1.1; margin-bottom:18px;
+}
+.val-title em { font-style:italic; color:var(--gold); }
+.val-sub {
+  font-family:'DM Mono',monospace; font-size:12px;
+  line-height:1.9; color:var(--muted); margin-bottom:52px;
+}
+.val-stats { border:1px solid var(--border); }
+.val-row {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:26px 30px; border-bottom:1px solid var(--border);
+  transition:background 0.3s;
+}
+.val-row:last-child { border-bottom:none; }
+.val-row:hover { background:var(--gold-dim); }
+.val-label {
+  font-family:'DM Mono',monospace; font-size:11px;
+  letter-spacing:0.1em; color:var(--muted); text-transform:uppercase;
+}
+.val-num {
+  font-family:'Cormorant Garamond',serif; font-size:40px;
+  font-weight:300; color:var(--cream); line-height:1;
+}
+.val-num sup { font-family:'DM Mono',monospace; font-size:14px; color:var(--gold); vertical-align:super; }
+
+/* Pain list */
+.pain-list { list-style:none; }
+.pain-item {
+  display:flex; gap:22px; padding:28px 0;
+  border-bottom:1px solid var(--border); align-items:flex-start;
+}
+.pain-item:first-child { padding-top:0; }
+.pain-n {
+  font-family:'DM Mono',monospace; font-size:10px;
+  color:var(--gold); letter-spacing:0.15em; padding-top:3px; flex-shrink:0;
+}
+.pain-q {
+  font-family:'Cormorant Garamond',serif; font-size:21px;
+  font-weight:300; color:var(--cream); line-height:1.4; font-style:italic;
+}
+.pain-s {
+  font-family:'DM Mono',monospace; font-size:11px;
+  color:var(--muted); line-height:1.7; margin-top:7px;
+}
+
+/* ─── POSITIONING ─── */
+.position { padding:110px 60px; background:var(--surface); }
+.pos-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(36px,4vw,56px); font-weight:300;
+  color:var(--cream); text-align:center; margin-bottom:12px;
+}
+.pos-title em { font-style:italic; color:var(--gold); }
+.pos-sub {
+  font-family:'DM Mono',monospace; font-size:12px;
+  color:var(--muted); text-align:center; margin-bottom:72px;
+  letter-spacing:0.1em;
+}
+.pos-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:2px; max-width:860px; margin:0 auto; background:var(--border);
+}
+.pos-col { background:var(--bg); padding:44px 36px; }
+.pos-col-lbl {
+  font-family:'DM Mono',monospace; font-size:10px;
+  letter-spacing:0.24em; text-transform:uppercase;
+  margin-bottom:28px; padding-bottom:18px; border-bottom:1px solid var(--border);
+}
+.pos-col.yes .pos-col-lbl { color:var(--green); }
+.pos-col.no  .pos-col-lbl { color:var(--red); }
+.pos-list { list-style:none; }
+.pos-list li {
+  font-family:'DM Mono',monospace; font-size:12px;
+  color:var(--muted); padding:11px 0;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+  display:flex; align-items:center; gap:11px; letter-spacing:0.04em;
+}
+.pos-list li::before { font-size:13px; flex-shrink:0; }
+.pos-col.yes .pos-list li::before { content:'✦'; color:var(--green); }
+.pos-col.no  .pos-list li::before { content:'×'; color:var(--red); }
+
+/* ─── CTA ─── */
+.cta-section {
+  padding:150px 60px; text-align:center; position:relative; overflow:hidden;
+}
+.cta-glow {
+  position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  width:600px; height:600px;
+  background:radial-gradient(circle,rgba(201,169,110,0.06) 0%,transparent 68%);
+  border-radius:50%; pointer-events:none;
+}
+.cta-eyebrow {
+  font-family:'DM Mono',monospace; font-size:10px;
+  letter-spacing:0.32em; color:var(--gold);
+  text-transform:uppercase; margin-bottom:36px; display:block;
+}
+.cta-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(50px,7vw,96px); font-weight:300;
+  color:var(--cream); line-height:0.96; margin-bottom:44px;
+}
+.cta-title em { font-style:italic; color:var(--gold); }
+.cta-desc {
+  font-family:'DM Mono',monospace; font-size:13px;
+  color:var(--muted); line-height:1.9;
+  max-width:460px; margin:0 auto 60px;
+}
+.cta-btns { display:flex; gap:14px; justify-content:center; }
+.btn-primary {
+  background:var(--gold); color:var(--bg);
+  font-family:'DM Mono',monospace; font-size:12px;
+  letter-spacing:0.18em; text-transform:uppercase;
+  padding:17px 46px; text-decoration:none; transition:background 0.3s;
+}
+.btn-primary:hover { background:var(--cream); }
+.btn-ghost {
+  border:1px solid var(--border); color:var(--muted);
+  font-family:'DM Mono',monospace; font-size:12px;
+  letter-spacing:0.18em; text-transform:uppercase;
+  padding:17px 46px; text-decoration:none; transition:all 0.3s;
+}
+.btn-ghost:hover { border-color:var(--gold); color:var(--gold); }
+
+/* ─── FOOTER ─── */
+footer {
+  border-top:1px solid var(--border); padding:36px 60px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.footer-logo {
+  font-family:'Cormorant Garamond',serif; font-size:18px;
+  font-weight:300; letter-spacing:0.14em;
+  color:var(--muted); text-transform:uppercase;
+}
+.footer-logo span { color:var(--gold); }
+.footer-note {
+  font-family:'DM Mono',monospace; font-size:10px;
+  letter-spacing:0.15em; color:rgba(240,234,216,0.2); text-transform:uppercase;
+}
+
+/* ─── POPUP ─── */
+.popup-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(5,5,4,0.82);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: center; justify-content: center;
+  padding: 20px;
+}
+.popup-overlay.open {
+  display: flex;
+  animation: overlayIn 0.4s ease both;
+}
+
+.popup-box {
+  background: #111110;
+  border: 1px solid rgba(201,169,110,0.3);
+  border-radius: 4px;
+  max-width: 480px; width: 100%;
+  padding: 52px 44px 44px;
+  position: relative;
+  animation: popIn 0.5s cubic-bezier(0.16,1,0.3,1) 0.1s both;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.7), 0 0 0 1px rgba(201,169,110,0.06);
+  text-align: center;
+}
+@keyframes overlayIn { from{opacity:0;} to{opacity:1;} }
+
+  from { opacity:0; transform:translateY(24px) scale(0.97); }
+  to   { opacity:1; transform:translateY(0) scale(1); }
+}
+
+.popup-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--gold-dim); border: 1px solid rgba(201,169,110,0.3);
+  border-radius: 2px; padding: 6px 14px;
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold);
+  margin-bottom: 28px;
+}
+.popup-badge-dot {
+  width: 6px; height: 6px; background: var(--gold); border-radius: 50%;
+  animation: liveBlink 1.8s ease-in-out infinite;
+}
+
+.popup-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(30px, 5vw, 42px); font-weight: 300;
+  color: var(--cream); line-height: 1.12; margin-bottom: 18px;
+}
+.popup-title em { font-style: italic; color: var(--gold); }
+
+.popup-body {
+  font-family: 'DM Mono', monospace; font-size: 12px;
+  line-height: 1.85; color: var(--muted); margin-bottom: 36px;
+}
+
+.popup-progress {
+  display: none;
+}
+.popup-progress-bar { display: none; }
+@keyframes progressGlow {}
+.popup-progress-label { display: none; }
+
+/* ─── PARALLAX SCROLL FADE ─── */
+.parallax-section {
+  opacity: 0;
+  transform: translateY(48px);
+  transition: opacity 0.85s cubic-bezier(0.22,1,0.36,1),
+              transform 0.85s cubic-bezier(0.22,1,0.36,1);
+  will-change: opacity, transform;
+}
+.parallax-section.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+.parallax-section.out-view {
+  opacity: 0;
+  transform: translateY(-36px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.popup-btn {
+  display: inline-block; width: 100%;
+  background: var(--gold); color: var(--bg);
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 15px 0; border: none; cursor: pointer;
+  transition: background 0.3s; margin-bottom: 14px;
+}
+.popup-btn:hover { background: var(--cream); }
+
+.popup-dismiss {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 0.15em; color: rgba(240,234,216,0.25);
+  text-transform: uppercase; cursor: pointer;
+  transition: color 0.3s; background: none; border: none;
+  display: block; width: 100%; text-align: center;
+}
+.popup-dismiss:hover { color: var(--muted); }
+
+.popup-close {
+  position: absolute; top: 18px; right: 20px;
+  background: none; border: none; cursor: pointer;
+  color: rgba(240,234,216,0.25); font-size: 20px; line-height: 1;
+  transition: color 0.3s; font-family: 'DM Mono', monospace;
+}
+.popup-close:hover { color: var(--gold); }
+
+/* ─── RESPONSIVE ─── */
+
+/* Tablet — 768px to 960px */
+@media (max-width:960px) {
+  nav { padding:18px 28px; }
+  .nav-tag { display:none; }
+  .hero { padding:0 28px 64px; }
+  .hero-bottom { flex-direction:column; align-items:flex-start; gap:36px; }
+  .hero-stats { flex-direction:row; gap:40px; }
+  .ticker-section { padding:80px 28px; }
+  .signals-grid { grid-template-columns:1fr 1fr; }
+  .problem { padding:80px 28px; grid-template-columns:1fr; gap:60px; }
+  .fragment-diagram { height:360px; }
+  .ai-chat-section { padding:80px 28px; }
+  .ai-chat-inner { grid-template-columns:1fr; gap:48px; }
+  .how { padding:80px 28px; }
+  .how-steps { grid-template-columns:1fr 1fr; }
+  .how-head { flex-direction:column; align-items:flex-start; gap:20px; }
+  .how-note { text-align:left; max-width:100%; }
+  .validation { padding:80px 28px; grid-template-columns:1fr; gap:52px; }
+  .position { padding:80px 28px; }
+  .pos-grid { grid-template-columns:1fr 1fr; }
+  .cta-section { padding:100px 28px; }
+  .cta-btns { flex-direction:column; align-items:center; }
+  footer { padding:32px 28px; flex-direction:column; gap:14px; text-align:center; }
+  .step-arr { display:none; }
+  .divider { width:calc(100% - 56px); margin:0 28px; }
+  .scroll-line-wrap { display:none; }
+}
+
+/* Mobile — up to 600px */
+@media (max-width:600px) {
+  nav { padding:16px 20px; }
+  .nav-cta { padding:8px 16px; font-size:10px; }
+
+  .hero { padding:0 20px 56px; min-height:100svh; }
+  .hero-eyebrow { font-size:9px; margin-bottom:24px; }
+  .hero-title { font-size:clamp(44px,11vw,64px); }
+  .hero-desc { font-size:12px; }
+  .hero-stats { gap:28px; }
+  .hero-stat-num { font-size:36px; }
+  .hero-stat-num sup { font-size:16px; }
+  .hero-stat-label { font-size:9px; }
+
+  .section-label { font-size:9px; margin-bottom:48px; }
+
+  .ticker-section { padding:64px 20px; }
+  .ticker-text { font-size:11px; }
+  .ticker-badge { font-size:9px; padding:2px 8px; }
+  .signals-grid { grid-template-columns:1fr; }
+  .signal-card { padding:36px 28px; }
+  .signal-title { font-size:26px; }
+  .signal-body { font-size:11px; }
+
+  .problem { padding:64px 20px; gap:48px; }
+  .problem-title { font-size:clamp(32px,8vw,48px); }
+  .problem-body { font-size:12px; }
+  .problem-quote { font-size:17px; }
+  .fragment-diagram { height:300px; }
+  .frag-node { font-size:10px; padding:10px 14px; }
+
+  .ai-chat-section { padding:64px 20px; }
+  .ai-chat-title { font-size:clamp(32px,8vw,48px); }
+  .ai-chat-desc { font-size:12px; }
+  .chat-messages { min-height:320px; padding:16px 14px; gap:14px; }
+  .ccard { font-size:11px; padding:12px 13px; }
+  .calert-b { font-size:10px; }
+  .csender { font-size:9px; }
+  .cavatar { width:24px; height:24px; font-size:9px; }
+  .chat-bar { padding:11px 14px; }
+  .c-title { font-size:10px; }
+  .chat-input-bar { padding:10px 14px; }
+  .chat-fake-input { font-size:11px; padding:8px 12px; }
+
+  .how { padding:64px 20px; }
+  .how-steps { grid-template-columns:1fr; }
+  .how-step { padding:36px 28px; }
+  .step-t { font-size:22px; }
+
+  .validation { padding:64px 20px; gap:48px; }
+  .val-title { font-size:clamp(30px,7vw,44px); }
+  .val-row { padding:20px 22px; }
+  .val-num { font-size:30px; }
+  .val-num sup { font-size:12px; }
+  .pain-q { font-size:18px; }
+
+  .position { padding:64px 20px; }
+  .pos-grid { grid-template-columns:1fr; }
+  .pos-col { padding:32px 26px; }
+
+  .cta-section { padding:80px 20px; }
+  .cta-title { font-size:clamp(40px,10vw,68px); }
+  .cta-desc { font-size:12px; }
+  .btn-primary, .btn-ghost { padding:15px 28px; font-size:11px; width:100%; text-align:center; }
+  .cta-btns { flex-direction:column; width:100%; max-width:320px; margin:0 auto; }
+
+  footer { padding:24px 20px; flex-direction:column; gap:12px; text-align:center; }
+  .footer-logo { font-size:16px; }
+
+  .divider { width:calc(100% - 40px); margin:0 20px; }
+
+  /* Popup on mobile */
+  .popup-box { padding:36px 24px 32px; }
+  .popup-title { font-size:clamp(24px,7vw,34px); }
+  .popup-body { font-size:11px; }
+}
+
+/* Small mobile — up to 380px */
+@media (max-width:380px) {
+  .hero-title { font-size:40px; }
+  .hero-eyebrow::before { width:24px; }
+  .ai-chat-inner { gap:36px; }
+  .signals-grid { gap:2px; }
+  .chat-messages { min-height:280px; }
+}
+</style>
+</head>
+<body>
+
+<!-- POPUP -->
+<div class="popup-overlay" id="popup">
+  <div class="popup-box">
+    <button class="popup-close" onclick="closePopup()" aria-label="Close">×</button>
+
+    <div class="popup-badge">
+      <div class="popup-badge-dot"></div>
+      Work in Progress
+    </div>
+
+    <h2 class="popup-title">We're building<br/>something <em>great.</em></h2>
+
+    <p class="popup-body">
+      Tope Ai is currently under active development. The product you see here is a preview of our vision — the full platform is on its way.
+    </p>
+
+    <button class="popup-btn" onclick="closePopup()">Got it — show me the vision</button>
+    <button class="popup-dismiss" onclick="closePopup()">Dismiss</button>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Tope <span>Ai</span></div>
+  <div class="nav-tag">Intelligent Business OS</div>
+  <a href="#" class="nav-cta" onclick="openPopup(event)">Request Access</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-orb"></div>
+  <div class="hero-orb2"></div>
+  <div class="hero-eyebrow">Intelligent Operating System</div>
+  <h1 class="hero-title">Your business,<br/>finally <em>understood.</em></h1>
+  <div class="hero-bottom">
+    <p class="hero-desc">
+      Tope Ai connects every part of your business — POS, banking,
+      inventory, staff — and tells you exactly what's happening,
+      what's coming, and what to do next.
+    </p>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">120<sup>+</sup></div>
+        <div class="hero-stat-label">Owner interviews</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">1</div>
+        <div class="hero-stat-label">Layer for everything</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-line-wrap">
+    <div class="scroll-line"></div>
+    <div class="scroll-label">Scroll</div>
+  </div>
+</section>
+
+<!-- TICKER + SIGNAL CARDS -->
+<section class="ticker-section parallax-section">
+  <div class="section-label">Live Business Signals</div>
+  <div class="signal-ticker">
+    <div class="ticker-track">
+      <div class="ticker-item"><div class="ticker-dot g"></div><span class="ticker-text">Milk sales velocity</span><span class="ticker-badge badge-up">+18% this week</span></div>
+      <div class="ticker-item"><div class="ticker-dot r"></div><span class="ticker-text">Cash runway</span><span class="ticker-badge badge-down">9 days remaining</span></div>
+      <div class="ticker-item"><div class="ticker-dot y"></div><span class="ticker-text">Staff allocation</span><span class="ticker-badge badge-warn">Overstaffed tomorrow</span></div>
+      <div class="ticker-item"><div class="ticker-dot r"></div><span class="ticker-text">Product expiry</span><span class="ticker-badge badge-down">3 items flagged</span></div>
+      <div class="ticker-item"><div class="ticker-dot g"></div><span class="ticker-text">Weekend foot traffic</span><span class="ticker-badge badge-up">Predicted +24%</span></div>
+      <div class="ticker-item"><div class="ticker-dot y"></div><span class="ticker-text">Inventory reorder</span><span class="ticker-badge badge-warn">Bread below threshold</span></div>
+      <!-- duplicate for seamless loop -->
+      <div class="ticker-item"><div class="ticker-dot g"></div><span class="ticker-text">Milk sales velocity</span><span class="ticker-badge badge-up">+18% this week</span></div>
+      <div class="ticker-item"><div class="ticker-dot r"></div><span class="ticker-text">Cash runway</span><span class="ticker-badge badge-down">9 days remaining</span></div>
+      <div class="ticker-item"><div class="ticker-dot y"></div><span class="ticker-text">Staff allocation</span><span class="ticker-badge badge-warn">Overstaffed tomorrow</span></div>
+      <div class="ticker-item"><div class="ticker-dot r"></div><span class="ticker-text">Product expiry</span><span class="ticker-badge badge-down">3 items flagged</span></div>
+      <div class="ticker-item"><div class="ticker-dot g"></div><span class="ticker-text">Weekend foot traffic</span><span class="ticker-badge badge-up">Predicted +24%</span></div>
+      <div class="ticker-item"><div class="ticker-dot y"></div><span class="ticker-text">Inventory reorder</span><span class="ticker-badge badge-warn">Bread below threshold</span></div>
+    </div>
+  </div>
+
+  <div class="signals-grid">
+    <div class="signal-card">
+      <div class="signal-num">01</div>
+      <div class="signal-icon">◎</div>
+      <div class="signal-title">Predict risks <em>before</em> they become crises</div>
+      <p class="signal-body">Tope Ai reads your financial patterns and flags cash flow problems days in advance — not after the damage is done.</p>
+    </div>
+    <div class="signal-card">
+      <div class="signal-num">02</div>
+      <div class="signal-icon">⟁</div>
+      <div class="signal-title">Inventory that <em>thinks</em> ahead</div>
+      <p class="signal-body">Know what's selling fast, what's about to expire, and what to reorder — automatically surfaced in plain language.</p>
+    </div>
+    <div class="signal-card">
+      <div class="signal-num">03</div>
+      <div class="signal-icon">⊕</div>
+      <div class="signal-title">Staff decisions made <em>simple</em></div>
+      <p class="signal-body">Understand if you're over or understaffed before you open. Match your team to real demand patterns.</p>
+    </div>
+    <div class="signal-card">
+      <div class="signal-num">04</div>
+      <div class="signal-icon">◈</div>
+      <div class="signal-title">One view. <em>Every</em> answer.</div>
+      <p class="signal-body">Stop switching between systems. Tope Ai is the single pane of glass that connects POS, banking, inventory, and operations.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<div class="divider"></div>
+<section class="problem parallax-section">
+  <div>
+    <div class="section-label">The Problem</div>
+    <h2 class="problem-title">Small businesses run on<br/><em>fragmented chaos.</em></h2>
+    <p class="problem-body">
+      POS in one system. Payments in another. Accounting somewhere else. Inventory manually tracked. Staff coordination improvised.<br/><br/>
+      Owners switch between tools all day and still can't answer a simple question: <strong style="color:var(--cream)">how is my business actually doing?</strong>
+    </p>
+    <blockquote class="problem-quote">
+      "Owners don't lack effort. They lack visibility and predictive guidance."
+      <cite>— Pattern across 120+ interviews</cite>
+    </blockquote>
+  </div>
+  <div class="fragment-diagram">
+    <svg class="frag-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+      <line x1="50" y1="50" x2="72" y2="16" stroke="rgba(201,169,110,0.12)" stroke-width="0.4"/>
+      <line x1="50" y1="50" x2="12" y2="32" stroke="rgba(201,169,110,0.12)" stroke-width="0.4"/>
+      <line x1="50" y1="50" x2="74" y2="62" stroke="rgba(201,169,110,0.12)" stroke-width="0.4"/>
+      <line x1="50" y1="50" x2="18" y2="74" stroke="rgba(201,169,110,0.12)" stroke-width="0.4"/>
+      <line x1="50" y1="50" x2="38" y2="46" stroke="rgba(201,169,110,0.12)" stroke-width="0.4"/>
+    </svg>
+    <div class="frag-node fn1">Point of Sale</div>
+    <div class="frag-node fn2">Inventory</div>
+    <div class="frag-node fn3">Banking</div>
+    <div class="frag-node fn4">Staff</div>
+    <div class="frag-node fn5">Payments</div>
+    <div class="frag-center">No<br/>clarity</div>
+  </div>
+</section>
+
+<!-- AI CHAT MOCKUP -->
+<section class="ai-chat-section parallax-section">
+  <div class="ai-chat-inner">
+    <!-- Left copy -->
+    <div>
+      <div class="section-label">Tope Ai in Action</div>
+      <h2 class="ai-chat-title">Your business,<br/>always <em>talking<br/>to you.</em></h2>
+      <p class="ai-chat-desc">
+        Tope Ai doesn't wait for you to ask. It surfaces what matters — cash risks, stock alerts, demand shifts — before you even open the app.
+      </p>
+      <div class="ai-pills">
+        <div class="ai-pill on">Cash Flow</div>
+        <div class="ai-pill">Inventory</div>
+        <div class="ai-pill">Staff</div>
+        <div class="ai-pill">Sales Trends</div>
+        <div class="ai-pill">Expiry Alerts</div>
+      </div>
+    </div>
+
+    <!-- Chat window -->
+    <div class="chat-window">
+      <div class="chat-bar">
+        <div class="c-dots">
+          <div class="c-dot r"></div>
+          <div class="c-dot y"></div>
+          <div class="c-dot g"></div>
+        </div>
+        <div class="c-title">Tope Ai · Business Intelligence</div>
+        <div class="c-live"><div class="c-live-dot"></div>Live</div>
+      </div>
+
+      <div class="chat-messages" id="chatBody">
+        <!-- msg 1: AI proactive -->
+        <div class="cmsg" id="msg1">
+          <div class="cavatar ai">T</div>
+          <div class="cbubble">
+            <div class="csender ai">Tope Ai</div>
+            <div class="ccard">
+              <div class="calert">
+                <div class="calert-icon">🔴</div>
+                <div>
+                  <div class="calert-t">Cash flow warning</div>
+                  <div class="calert-b">At your current burn rate, you'll have less than ₦120,000 in 9 days. Your next supplier payment is due in 7.</div>
+                  <span class="ctag r">Action needed</span>
+                </div>
+              </div>
+              <div class="calert">
+                <div class="calert-icon">📦</div>
+                <div>
+                  <div class="calert-t">Milk selling 18% faster this week</div>
+                  <div class="calert-b">Current stock runs out by Thursday. Reorder 48 units to meet projected weekend demand.</div>
+                  <span class="ctag y">Reorder suggested</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- msg 2: User -->
+        <div class="cmsg user" id="msg2">
+          <div class="cbubble">
+            <div class="csender user">You</div>
+            <div class="ccard">What about staffing this weekend?</div>
+          </div>
+          <div class="cavatar user">👤</div>
+        </div>
+
+        <!-- typing -->
+        <div class="cmsg" id="msgTyping" style="align-items:center;">
+          <div class="cavatar ai">T</div>
+          <div class="cbubble">
+            <div class="csender ai">Tope Ai</div>
+            <div class="ctyping" id="typingDots">
+              <div class="tdots">
+                <div class="tdot"></div><div class="tdot"></div><div class="tdot"></div>
+              </div>
+              Analysing patterns...
+            </div>
+          </div>
+        </div>
+
+        <!-- msg 3: AI staffing reply -->
+        <div class="cmsg" id="msg3">
+          <div class="cavatar ai">T</div>
+          <div class="cbubble">
+            <div class="csender ai">Tope Ai</div>
+            <div class="ccard">
+              <div class="calert">
+                <div class="calert-icon">🟡</div>
+                <div>
+                  <div class="calert-t">Overstaffed Saturday afternoon</div>
+                  <div class="calert-b">Footfall has dropped 22% the past 3 Saturdays. You're rostered for 4 — 2 staff may be sufficient after 2pm.</div>
+                  <span class="ctag y">Review roster</span>
+                </div>
+              </div>
+              <div class="calert">
+                <div class="calert-icon">🟢</div>
+                <div>
+                  <div class="calert-t">Sunday looks strong</div>
+                  <div class="calert-b">Predicted +31% traffic vs last Sunday. Keep a full team from 10am – 4pm.</div>
+                  <span class="ctag g">Good to go</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Input bar -->
+      <div class="chat-input-bar">
+        <div class="chat-fake-input">
+          <span id="typedText"></span><span class="fake-cursor"></span>
+        </div>
+        <div class="chat-send">↑</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how parallax-section">
+  <div class="how-head">
+    <h2 class="how-title">How it<br/><em>works</em></h2>
+    <p class="how-note">Four steps from fragmented data to predictive clarity — all in one intelligent layer.</p>
+  </div>
+  <div class="how-steps">
+    <div class="how-step">
+      <div class="step-n">01 / Connect</div>
+      <div class="step-t">Plug in your existing tools</div>
+      <p class="step-b">Tope Ai integrates with your POS, bank accounts, inventory systems, and staff tools. No migration needed.</p>
+      <div class="step-arr"></div>
+    </div>
+    <div class="how-step">
+      <div class="step-n">02 / Interpret</div>
+      <div class="step-t">AI reads the patterns</div>
+      <p class="step-b">Our models process your real-time data and surface what matters — anomalies, trends, and risks — automatically.</p>
+      <div class="step-arr"></div>
+    </div>
+    <div class="how-step">
+      <div class="step-n">03 / Predict</div>
+      <div class="step-t">See 7–14 days ahead</div>
+      <p class="step-b">Cash flow forecasts, inventory depletion curves, and demand predictions — delivered in plain, jargon-free language.</p>
+      <div class="step-arr"></div>
+    </div>
+    <div class="how-step">
+      <div class="step-n">04 / Act</div>
+      <div class="step-t">Clear next steps, always</div>
+      <p class="step-b">Every insight comes with a specific, actionable recommendation. No interpretation needed. Just do the next thing.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VALIDATION -->
+<div class="divider"></div>
+<section class="validation parallax-section">
+  <div>
+    <div class="section-label">Validation</div>
+    <h2 class="val-title">Built on<br/><em>real</em> signal.</h2>
+    <p class="val-sub">This is not a theoretical problem. Every number below came from conversations with real business owners experiencing real pain.</p>
+    <div class="val-stats">
+      <div class="val-row">
+        <span class="val-label">Owner interviews</span>
+        <span class="val-num">120<sup>+</sup></span>
+      </div>
+      <div class="val-row">
+        <span class="val-label">Waitlist status</span>
+        <span class="val-num" style="font-size:28px; letter-spacing:0.05em;">Ready to pay</span>
+      </div>
+      <div class="val-row">
+        <span class="val-label">Core pain identified</span>
+        <span class="val-num" style="font-size:28px; letter-spacing:0.05em;">1 clear need</span>
+      </div>
+      <div class="val-row">
+        <span class="val-label">Primary segment</span>
+        <span class="val-num" style="font-size:28px; letter-spacing:0.05em;">SMEs</span>
+      </div>
+    </div>
+  </div>
+  <div>
+    <ul class="pain-list">
+      <li class="pain-item">
+        <span class="pain-n">01</span>
+        <div>
+          <div class="pain-q">"I don't know if I'll make payroll next month."</div>
+          <p class="pain-s">Cash flow blindness — the #1 fear across all interviews</p>
+        </div>
+      </li>
+      <li class="pain-item">
+        <span class="pain-n">02</span>
+        <div>
+          <div class="pain-q">"I only find out something went wrong after it's too late."</div>
+          <p class="pain-s">Reactive operations, not proactive management</p>
+        </div>
+      </li>
+      <li class="pain-item">
+        <span class="pain-n">03</span>
+        <div>
+          <div class="pain-q">"I'm switching between five apps and still don't have answers."</div>
+          <p class="pain-s">Tool fragmentation creates decision paralysis</p>
+        </div>
+      </li>
+      <li class="pain-item">
+        <span class="pain-n">04</span>
+        <div>
+          <div class="pain-q">"The software speaks accounting. I speak survival."</div>
+          <p class="pain-s">Jargon-heavy tools exclude the owners who need clarity most</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- POSITIONING -->
+<section class="position parallax-section">
+  <h2 class="pos-title">What Tope Ai <em>is.</em></h2>
+  <p class="pos-sub">And what it deliberately is not.</p>
+  <div class="pos-grid">
+    <div class="pos-col yes">
+      <div class="pos-col-lbl">✦ We are</div>
+      <ul class="pos-list">
+        <li>Intelligent and calm</li>
+        <li>A connective operating layer</li>
+        <li>Predictive and proactive</li>
+        <li>Jargon-free and human</li>
+        <li>Built for non-technical owners</li>
+        <li>Infrastructure for the long term</li>
+      </ul>
+    </div>
+    <div class="pos-col no">
+      <div class="pos-col-lbl">× We are not</div>
+      <ul class="pos-list">
+        <li>Another dashboard</li>
+        <li>Hype-driven AI</li>
+        <li>An accounting or POS tool</li>
+        <li>Overly complex SaaS</li>
+        <li>Automation gimmicks</li>
+        <li>One more thing to manage</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section parallax-section" id="contact">
+  <div class="cta-glow"></div>
+  <span class="cta-eyebrow">The long-term vision</span>
+  <h2 class="cta-title">The operating<br/>layer small<br/><em>business relies on.</em></h2>
+  <p class="cta-desc">
+    We're building the infrastructure beneath every small business decision — giving owners the clarity, control, and peace of mind they've never had.
+  </p>
+  <div class="cta-btns">
+    <a href="#" class="btn-primary" onclick="openPopup(event)">Join the Waitlist</a>
+    <a href="#" class="btn-ghost" onclick="openPopup(event)">Learn More</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Tope <span>Ai</span></div>
+  <div class="footer-note">Intelligent OS for Small Business</div>
+  <div class="footer-note">© 2025 Tope Ai</div>
+</footer>
+
+<script>
+// ── Popup ──
+function openPopup(e) {
+  if (e) e.preventDefault();
+  const overlay = document.getElementById('popup');
+  overlay.classList.add('open');
+  overlay.style.opacity = '';
+  document.body.style.overflow = 'hidden';
+}
+
+function closePopup() {
+  const overlay = document.getElementById('popup');
+  overlay.style.transition = 'opacity 0.35s ease';
+  overlay.style.opacity = '0';
+  setTimeout(() => {
+    overlay.classList.remove('open');
+    overlay.style.opacity = '';
+    overlay.style.transition = '';
+    document.body.style.overflow = '';
+  }, 360);
+}
+
+document.getElementById('popup').addEventListener('click', function(e) {
+  if (e.target === this) closePopup();
+});
+
+// ── Chat animation ──
+const msgs = {
+  m1: document.getElementById('msg1'),
+  m2: document.getElementById('msg2'),
+  mt: document.getElementById('msgTyping'),
+  td: document.getElementById('typingDots'),
+  m3: document.getElementById('msg3'),
+};
+const typedText = document.getElementById('typedText');
+const question  = "What about staffing this weekend?";
+
+function hide(el) { el.classList.remove('show'); el.style.opacity = 0; }
+function show(el, delay) {
+  setTimeout(() => { el.classList.add('show'); }, delay);
+}
+
+function typeText(cb) {
+  let i = 0;
+  typedText.textContent = '';
+  const iv = setInterval(() => {
+    typedText.textContent = question.slice(0, i);
+    i++;
+    if (i > question.length) { clearInterval(iv); if (cb) cb(); }
+  }, 52);
+}
+
+function runChat() {
+  // Reset
+  Object.values(msgs).forEach(hide);
+  typedText.textContent = '';
+
+  // 1. AI msg 1
+  show(msgs.m1, 500);
+
+  // 2. User types in input, then bubble appears
+  setTimeout(() => typeText(() => {
+    setTimeout(() => {
+      show(msgs.m2, 100);
+      typedText.textContent = '';
+    }, 400);
+  }), 2400);
+
+  // 3. Typing indicator
+  setTimeout(() => show(msgs.mt, 0), 4800);
+
+  // 4. AI reply
+  setTimeout(() => {
+    hide(msgs.mt);
+    show(msgs.m3, 300);
+  }, 6600);
+
+  // 5. Loop
+  setTimeout(runChat, 13000);
+}
+
+// Start when visible on screen (with fallback after 1s for local files)
+let started = false;
+function startOnce() { if (!started) { started = true; runChat(); } }
+
+if ('IntersectionObserver' in window) {
+  const obs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) { startOnce(); obs.disconnect(); }
+  }, { threshold: 0.2 });
+  obs.observe(document.querySelector('.ai-chat-section'));
+} else {
+  setTimeout(startOnce, 1000);
+}
+// ── Parallax fade-in / fade-out on scroll ──
+(function() {
+  const sections = document.querySelectorAll('.parallax-section');
+
+  // Track each section's previous Y for direction detection
+  const prevY = new Map();
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const el = entry.target;
+      const boundingTop = entry.boundingClientRect.top;
+      const windowH = window.innerHeight;
+
+      if (entry.isIntersecting) {
+        // Entering viewport — fade in
+        el.classList.add('in-view');
+        el.classList.remove('out-view');
+      } else {
+        // Leaving viewport
+        if (boundingTop < 0) {
+          // Scrolled past (exiting top) — fade up & out
+          el.classList.add('out-view');
+          el.classList.remove('in-view');
+        } else {
+          // Not yet reached (below viewport) — reset to fade-in-ready state
+          el.classList.remove('in-view');
+          el.classList.remove('out-view');
+        }
+      }
+    });
+  }, {
+    threshold: [0, 0.08, 0.15],
+    rootMargin: '0px 0px -60px 0px'
+  });
+
+  sections.forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>
